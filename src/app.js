@@ -27,19 +27,19 @@ main.show();
 
 function standUp()
 {
-  var loop = setInterval(function() { Vibe.vibrate('double'); }, 1000 * 2);
-  setTimeout(function() {
-    clearInterval(loop); 
-  }, 1000 * 7);  
+  Vibe.vibrate('double');
 }
 
 function schedule()
 {
+  var nextNotification = new Date();
+  nextNotification.setMinutes(nextNotification.getMinutes() + 30);
+  
   Wakeup.cancel('all');
   Wakeup.schedule({
-    time: Date.now() / 1000 + (60 * 30)
+    time: nextNotification
   }, function(e) {
-    if (Date.getHours() > 19)
+    if (new Date().getHours() > 19)
       return;
     
     standUp();
